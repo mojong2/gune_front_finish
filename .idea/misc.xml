@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2915" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable-v24/line.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable-v24/line1.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable-v24/line2.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable-v24/line4.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable-v24/line5.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable/coding_leftbutton.xml" value="0.2915" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable/coding_main_menu_btm.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable/coding_mbutton.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable/coding_pmbutton.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable/coding_rightbutton.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/drawable/custom_button_selector.xml" value="0.262" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/anounce_main.xml" value="0.3451086956521739" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/create_id_main.xml" value="0.3381742738589212" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/custom_list_item.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/dialog1.xml" value="0.3451086956521739" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/find_id_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/find_pw_1_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/find_pw_2_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/find_pw_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/gongji_insert_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/gongji_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/gongji_opinion_main.xml" value="0.2930253623188406" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/gongji_sub_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/gongji_update_main.xml" value="0.3451086956521739" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/gune_main.xml" value="0.3451086956521739" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/login_create_main.xml" value="0.17249240121580547" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/opinion_list_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test-30-master/app/src/main/res/layout/setting_main.xml" value="0.17249240121580547" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable-v24/line1.xml" value="0.2105" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable-v24/line2.xml" value="0.2105" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable-v24/line3.xml" value="0.2105" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable-v24/line4.xml" value="0.2725" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable/coding_leftbutton.xml" value="0.2725" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable/coding_main_menu_btm.xml" value="0.2725" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/drawable/custom_button_selector.xml" value="0.2725" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/anounce_main.xml" value="0.30932971014492755" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/create_id_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/custom_list_item.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/dialog1.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/find_id_main.xml" value="0.171225937183384" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/find_pw_1_main.xml" value="0.171225937183384" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/find_pw_2_main.xml" value="0.171225937183384" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/gongji_insert_main.xml" value="0.26059763724808893" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/gongji_main.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/gongji_sub_main.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/gune_main.xml" value="0.30932971014492755" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/login_create_main.xml" value="0.2259963768115942" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/login_main.xml" value="0.20018115942028986" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/opinion_list_item.xml" value="0.18072916666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/real_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30-master/app/src/main/res/layout/setting_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable-v24/line.xml" value="0.171" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable-v24/line1.xml" value="0.1895" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable-v24/line2.xml" value="0.171" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable-v24/line3.xml" value="0.24" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/coding_leftbutton.xml" value="0.3265" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/coding_mbutton.xml" value="0.1" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/coding_pmbutton.xml" value="0.1025" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/coding_rightbutton.xml" value="0.3265" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/custom_button_selector.xml" value="0.242" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/horizon_enter.xml" value="0.24" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/drawable/login_back_more.xml" value="0.3635" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/font/font1.xml" value="0.3854166666666667" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/font/font2.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/font/font3.xml" value="0.3758974358974359" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/font/font_3.xml" value="0.3758974358974359" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/GunE_main.xml" value="0.2803442028985507" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/activity_main2.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/activity_main3.xml" value="0.17249240121580547" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/activity_main4.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/activity_main5.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/activity_main6.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/anounce_main.xml" value="0.17249240121580547" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/chatbot_main.xml" value="0.29483695652173914" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/create_id_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/create_id_main1.xml" value="0.18125" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/create_id_main2.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/create_id_main3.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/dialog1.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/find_id_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/find_pw_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/gongji_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/gongji_sub_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/gune_main.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/line.xml" value="0.1" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/login1_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/login_create_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/login_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/real_main.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/real_main1.xml" value="0.22" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/layout/setting_main.xml" value="0.348731884057971" />
+        <entry key="..\:/Users/GooJongMo/AndroidStudioProjects/test30/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.242" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/create_id_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/find_id_main.xml" value="0.3242753623188406" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/find_pw_1_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/find_pw_2_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/find_pw_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/gune_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/login_create_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/login_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/real_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/SejongCountryCoCo-master/app/src/main/res/layout/setting_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/anounce_main.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/gongji_insert_main.xml" value="0.1778115501519757" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/gongji_main.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/gongji_sub_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/gune_main.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/real_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/test30-master/app/src/main/res/layout/real_main_admin.xml" value="0.33" />
+        <entry key="..\:/Users/USER/android/SejongCountryCoCo-master/app/src/main/res/layout/create_id_main.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/USER/android/SejongCountryCoCo-master/app/src/main/res/layout/real_main.xml" value="0.1634963768115942" />
+        <entry key="..\:/Users/USER/android/SejongCountryCoCo-master/app/src/main/res/layout/real_main1.xml" value="0.1634963768115942" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
