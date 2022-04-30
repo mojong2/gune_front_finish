@@ -9,7 +9,7 @@
     tools:context=".MainActivity2">
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="180dp"
         android:layout_height="204dp"
         android:layout_gravity="center"
         android:background="@drawable/login_logo" />
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/mainmenu_button_1"
                 android:fontFamily="@font/font2"
-                android:text="방송듣기"
+                android:text="방송하기"
                 android:textColor="@color/black"
                 android:backgroundTint="@null"
                 android:textSize="40dp" />

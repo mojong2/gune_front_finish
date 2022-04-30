@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gongji_bg"
-    tools:context=".GongjiSubActivity">
+    tools:context=".GuneSubActivity">
     <LinearLayout
         android:id="@+id/first"
         android:layout_width="match_parent"
@@ -88,7 +88,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/empty_view1"
-        android:layout_marginTop="40dp"
         >
 
         <TextView
@@ -111,7 +110,6 @@
         android:layout_toRightOf="@id/empty_view2"
         android:layout_below="@id/empty_view1"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
         >
 
         <TextView

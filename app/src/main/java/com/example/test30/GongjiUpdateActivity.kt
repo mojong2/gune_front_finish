@@ -9,6 +9,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Window
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.gongji_update_main.*
@@ -21,6 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class GongjiUpdateActivity : AppCompatActivity() {
@@ -30,20 +33,21 @@ class GongjiUpdateActivity : AppCompatActivity() {
     val format2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     var TODAY = format1.format(current)
     var userId = ""
+    var boardNo = 0
     var boardTitle = ""
     var boardContent = ""
     var boardType = ""
     var boardStatus = ""
-    var boardCrtu = ""
     var boardCrtd = ""
+    var boardArtu = ""
+    var boardArtd = ""
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.gongji_update_main)
-
-        today_text.text = "작성일자 : " + TODAY
 
         //SharedPreferences에 값이 저장되어있지 않을 때
         if(MySharedPreferences.getUserId(this).isNullOrBlank() || MySharedPreferences.getUserPw(this).isNullOrBlank() || MySharedPreferences.getUserType(this).isNullOrBlank()) {
@@ -53,8 +57,27 @@ class GongjiUpdateActivity : AppCompatActivity() {
             userId = MySharedPreferences.getUserId(this)
         }
 
+        if(intent.hasExtra("NO")){
+            boardNo = intent.getIntExtra("NO", 0)
+        }
+        if(intent.hasExtra("TITLE")){
+            boardTitle = intent.getStringExtra("TITLE").toString()
+            title_text.setText(boardTitle)
+        }
+        if(intent.hasExtra("CONTENT")){
+            boardContent = intent.getStringExtra("CONTENT").toString()
+            contents_text.setText(boardContent)
+        }
+        if(intent.hasExtra("CRTD")){
+            boardCrtd = intent.getStringExtra("CRTD").toString()
+            val WDAY1 = LocalDateTime.parse(boardCrtd, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+            val WDAY2 = WDAY1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            today_text.text = "작성일자 : " + WDAY2
+        }
+
         back_button.setOnClickListener({
             val intent = Intent(this, GongjiSubActivity::class.java)
+            intent.putExtra("NO", boardNo)
             startActivity(intent)
             ActivityCompat.finishAffinity(this)
             overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
@@ -103,13 +126,12 @@ class GongjiUpdateActivity : AppCompatActivity() {
                 else {  //일반 공지
                     boardType = "0"
                 }
-                boardStatus = "u"
-                boardCrtu = userId
-                boardCrtd = format2.format(current)
-                insertBoardPost(boardTitle, boardContent, boardType, boardStatus, userId, boardCrtu, boardCrtd)
+                boardArtu = userId
+                boardArtd = format2.format(current)
+                updateBoardPost(boardNo, boardTitle, boardContent, boardType, boardArtu, boardArtd)
 
-                Toast.makeText(this, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity3::class.java)
+                Toast.makeText(this, "게시글이 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SubActivity::class.java)
                 startActivity(intent)
                 ActivityCompat.finishAffinity(this)
                 overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
@@ -117,14 +139,15 @@ class GongjiUpdateActivity : AppCompatActivity() {
         })
     }
     override fun onBackPressed() {
-            val intent = Intent(this, GongjiSubActivity::class.java)
-            startActivity(intent)
-            ActivityCompat.finishAffinity(this)
-            overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
-            finish()
+        val intent = Intent(this, GongjiSubActivity::class.java)
+        intent.putExtra("NO", boardNo)
+        startActivity(intent)
+        ActivityCompat.finishAffinity(this)
+        overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
+        finish()
     }
 
-    private fun insertBoardPost(TITLE: String, CONTENT: String, TYPE: String, STATUS: String, ID: String, CRTU: String, CRTD: String) {
+    private fun updateBoardPost(NO: Int, TITLE: String, CONTENT: String, TYPE: String, ARTU: String, ARTD: String) {
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://sejongcountry.dothome.co.kr/")
@@ -132,15 +155,13 @@ class GongjiUpdateActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(BoardInterface::class.java)
-        val call: Call<String> = service.insertBoard(TITLE, CONTENT, TYPE, STATUS, ID, CRTU, CRTD)
+        val call: Call<String> = service.updateBoard(NO, TITLE, CONTENT, TYPE, ARTU, ARTD)
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
                 if(response.isSuccessful && response.body() != null) {
                     var result = response.body().toString()
                     Log.d("Reg", "onResponse Success : " + response.toString())
                     Log.d("Reg", "onResponse Success : " + result)
-
-                    val info = JSONObject(result)
                 }
                 else {
                     Log.d("Reg", "onResponse Failed")

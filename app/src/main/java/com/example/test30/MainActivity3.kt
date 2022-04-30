@@ -45,7 +45,7 @@ class MainActivity3 : AppCompatActivity() {
             ge_button.visibility = View.VISIBLE
             gun_button.visibility = View.GONE
             gong_button.visibility = View.GONE
-            val intent = Intent(this, GuneActivity::class.java)
+            val intent = Intent(this, SubActivity2::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_right_exit)
         })

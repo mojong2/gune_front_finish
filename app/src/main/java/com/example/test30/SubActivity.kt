@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.Toast
@@ -54,16 +55,22 @@ class SubActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         val currentTime : Long = System.currentTimeMillis()
+        val anim_test = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.text_anim) // 글자 애니메이션
 
         setContentView(R.layout.gongji_main)
         val cal = Calendar.getInstance()
         cal.time = Date()
 
-        boardListImp()
+        boardListImp(0, TODAY)
+
+
 
         listView.adapter = adapter
         listView.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long->
@@ -96,7 +103,36 @@ class SubActivity : AppCompatActivity() {
                 finish()
             }
         })
+        select_date.setOnClickListener({
+            select_date.isClickable = false
+            CVOn.visibility = View.VISIBLE
+            listView.visibility = View.INVISIBLE
+            CVOn.startAnimation(anim_test)
+            var selected_date = ""
+            CalendarView.setOnDateChangeListener{view, year, month, date ->
+                if((month+1 < 10) && (date < 10)) {
+                    selected_date = String.format("%d-0%d-0%d",year,month+1,date)
+                }
+                else if((month+1 < 10) && (date >= 10)) {
+                    selected_date = String.format("%d-0%d-%d",year,month+1,date)
+                }
+                else if((month+1 >= 10) && (date < 10)) {
+                    selected_date = String.format("%d-%d-0%d",year,month+1,date)
+                }
+                else {
+                    selected_date = String.format("%d-%d-%d",year,month+1,date)
+                }
 
+            }
+            choose_date.setOnClickListener({
+                select_date.isClickable = true
+                CVOn.visibility = View.INVISIBLE
+                listView.visibility = View.VISIBLE
+
+                items.clear()
+                boardListImp(1, selected_date)
+            })
+        })
     }
 
     override fun onBackPressed() {
@@ -116,7 +152,7 @@ class SubActivity : AppCompatActivity() {
         }
     }
 
-    private fun boardListImp() {
+    private fun boardListImp(flag: Int, DAY: String) {
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://sejongcountry.dothome.co.kr/")
@@ -151,16 +187,32 @@ class SubActivity : AppCompatActivity() {
                     }
                     adapter.notifyDataSetChanged()
 
-                    var TODAYD = LocalDate.parse(TODAY, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    var TODAYS = TODAYD.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    var j = 0
-                    while(j < 7) {
-                        boardListNor(TODAYS)
-                        Thread.sleep(30L)
+                    if(flag == 0) {
+                        var TODAYD = LocalDate.parse(TODAY, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        var TODAYS = TODAYD.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        var j = 0
+                        while (j < 7) {
+                            boardListNor(TODAYS)
+                            Thread.sleep(35L)
 
-                        TODAYD = TODAYD.minusDays(1)
-                        TODAYS = TODAYD.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                        j++
+                            TODAYD = TODAYD.minusDays(1)
+                            TODAYS = TODAYD.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                            j++
+                        }
+                    }
+                    else if(flag == 1) {
+                        var TODAYD = LocalDate.parse(DAY, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        TODAYD = TODAYD.plusDays(3)
+                        var TODAYS = TODAYD.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        var j = 0
+                        while (j < 7) {
+                            boardListNor(TODAYS)
+                            Thread.sleep(30L)
+
+                            TODAYD = TODAYD.minusDays(1)
+                            TODAYS = TODAYD.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                            j++
+                        }
                     }
                 }
                 else {

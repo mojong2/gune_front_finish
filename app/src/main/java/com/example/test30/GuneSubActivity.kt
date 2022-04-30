@@ -20,16 +20,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.gongji_main.*
 import kotlinx.android.synthetic.main.opinion_list_item.view.*
-import kotlinx.android.synthetic.main.gongji_sub_main.*
-import kotlinx.android.synthetic.main.gongji_sub_main.size_small_button
-import kotlinx.android.synthetic.main.gongji_sub_main.size_text
-import kotlinx.android.synthetic.main.gongji_sub_main.size_up_button
-import kotlinx.android.synthetic.main.gongji_sub_main.Sound_button
+import kotlinx.android.synthetic.main.gune_sub_main.*
+import kotlinx.android.synthetic.main.gune_sub_main.size_small_button
+import kotlinx.android.synthetic.main.gune_sub_main.size_text
+import kotlinx.android.synthetic.main.gune_sub_main.size_up_button
+import kotlinx.android.synthetic.main.gune_sub_main.Sound_button
 import kotlinx.android.synthetic.main.gune_main.*
-import kotlinx.android.synthetic.main.setting_main.*
-import kotlinx.android.synthetic.main.setting_main.back_button
+import kotlinx.android.synthetic.main.gune_main.back_button
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,11 +38,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GongjiSubActivity : AppCompatActivity() {
-    var boardNo = 0
-    var boardTitle = ""
-    var boardContent = ""
-    var boardCrtd = ""
+class GuneSubActivity : AppCompatActivity() {
+
     private var tts: TextToSpeech? = null
     val CONTEXT : Context = this
     private fun initTextToSpeech(){
@@ -70,7 +65,7 @@ class GongjiSubActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.gongji_sub_main)
+        setContentView(R.layout.gune_sub_main)
         contents1_text.movementMethod = ScrollingMovementMethod.getInstance()
         contents1_text.post {
             val scrollAmount = contents1_text.layout.getLineTop(contents1_text.lineCount) - contents1_text.height
@@ -88,11 +83,6 @@ class GongjiSubActivity : AppCompatActivity() {
         val secondintent =intent
         val dataFormat1 = SimpleDateFormat("yyyy.MM.dd")
 
-        if(intent.hasExtra("NO")){
-            boardNo = intent.getIntExtra("NO", 0)
-        }
-        selectBoardNo(boardNo)
-        selectReplyNo(boardNo)
 
         if(MySharedPreferences.getUserType(this).equals("0")) {
             update_text.visibility = View.INVISIBLE
@@ -103,14 +93,13 @@ class GongjiSubActivity : AppCompatActivity() {
             delete_text.visibility = View.VISIBLE
         }
         show_opinion.setOnClickListener({
-            val intent = Intent(this, GongjiOpinionActivity::class.java)
-            intent.putExtra("NO", boardNo)
+            val intent = Intent(this, GuneOpinionActivity::class.java)
             startActivity(intent)
             ActivityCompat.finishAffinity(this)
             overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_right_exit)
         })
         back_button.setOnClickListener({
-            val intent = Intent(this, SubActivity::class.java)
+            val intent = Intent(this, SubActivity2::class.java)
             startActivity(intent)
             ActivityCompat.finishAffinity(this)
             overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
@@ -151,11 +140,8 @@ class GongjiSubActivity : AppCompatActivity() {
             var dialog_listener = object: DialogInterface.OnClickListener{
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     when(which){
-                        DialogInterface.BUTTON_POSITIVE -> { // 삭제 버튼이 눌렸음
+                        DialogInterface.BUTTON_POSITIVE -> {
 
-                            deleteBoardNo(boardNo)
-
-                            //여기 안에다가 삭제 버튼 눌렸을때 해주면 좋을듯
                             dialog1.setTitle("게시글 삭제 완료")
                             dialog1.setMessage("게시글을 삭제했습니다!")
                             var dialog_listener = object: DialogInterface.OnClickListener{
@@ -178,16 +164,6 @@ class GongjiSubActivity : AppCompatActivity() {
             dialog.setNegativeButton("취소",dialog_listener)
             dialog.show()
         })
-        update_text.setOnClickListener({
-            val intent = Intent(this, GongjiUpdateActivity::class.java)
-            intent.putExtra("NO", boardNo)
-            intent.putExtra("TITLE", boardTitle)
-            intent.putExtra("CONTENT", boardContent)
-            intent.putExtra("CRTD", boardCrtd)
-            startActivity(intent)
-            ActivityCompat.finishAffinity(this)
-            overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_right_exit)
-        })
     }
 
     override fun onBackPressed() {
@@ -199,124 +175,6 @@ class GongjiSubActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-    }
-
-    private fun selectBoardNo(NO: Int) {
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://sejongcountry.dothome.co.kr/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(BoardInterface::class.java)
-        val call: Call<String> = service.selectBoard(NO)
-        call.enqueue(object: Callback<String> {
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                if(response.isSuccessful && response.body() != null) {
-                    var result = response.body().toString()
-                    Log.d("Reg", "onResponse Success : " + response.toString())
-                    Log.d("Reg", "onResponse Success : " + result)
-
-                    val info = JSONObject(result)
-                    val status = info.getString("status")
-
-                    if(status.equals("true")) {
-                        val TITLE = info.getString("TITLE")
-                        val CONTENT = info.getString("CONTENT")
-                        val CRTD = info.getString("CRTD")
-
-                        boardTitle = TITLE
-                        boardContent = CONTENT
-                        boardCrtd = CRTD
-
-                        title1_text.text = TITLE
-                        contents1_text.text = CONTENT
-                    }
-                    else if(status.equals("false")) {
-
-                    }
-                }
-
-                else {
-                    Log.d("Reg", "onResponse Failed")
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("Reg", "error : " + t.message.toString())
-            }
-        })
-
-    }
-
-    private fun selectReplyNo(NO: Int) {
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://sejongcountry.dothome.co.kr/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(BoardInterface::class.java)
-        val call: Call<String> = service.selectReplyNo(NO)
-        call.enqueue(object: Callback<String> {
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                if(response.isSuccessful && response.body() != null) {
-                    var result = response.body().toString()
-                    Log.d("Reg", "onResponse Success : " + response.toString())
-                    Log.d("Reg", "onResponse Success : " + result)
-
-                    val info = JSONObject(result)
-                    val status = info.getString("status")
-
-                    if(status.equals("true")) {
-                        val NUM = info.getString("NUM")
-
-                        show_opinion.text = "댓글(" + NUM + ")"
-                    }
-                    else if(status.equals("false")) {
-
-                    }
-                }
-
-                else {
-                    Log.d("Reg", "onResponse Failed")
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("Reg", "error : " + t.message.toString())
-            }
-        })
-
-    }
-
-    private fun deleteBoardNo(NO: Int) {
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://sejongcountry.dothome.co.kr/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(BoardInterface::class.java)
-        val call: Call<String> = service.deleteBoard(NO)
-        call.enqueue(object: Callback<String> {
-            override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {
-                if(response.isSuccessful && response.body() != null) {
-                    var result = response.body().toString()
-                    Log.d("Reg", "onResponse Success : " + response.toString())
-                    Log.d("Reg", "onResponse Success : " + result)
-                }
-
-                else {
-                    Log.d("Reg", "onResponse Failed")
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("Reg", "error : " + t.message.toString())
-            }
-        })
-
     }
 
 }

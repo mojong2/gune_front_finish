@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="104dp">
+        android:layout_height="wrap_content">
 
         <View
             android:id="@+id/empty_view"
@@ -31,10 +31,12 @@
         <TextView
             android:id="@+id/user_text"
             android:layout_width="344dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/user_name"
             android:layout_marginLeft="29dp"
             android:layout_toRightOf="@id/empty_view1"
+            android:autoSizeMinTextSize="29dp"
+            android:autoSizeTextType="uniform"
             android:fontFamily="@font/font1"
             android:text="그말에 동의합니다."
             android:textColor="@color/black"
@@ -48,6 +50,16 @@
             android:text="04/23 01:36"
             android:textColor="#4E4E4E"
             android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/delete_button"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/user_date"
+            android:gravity="center"
+            android:text="삭제"
+            android:textColor="@color/black"
+            android:textSize="25dp" />
 
         <View
             android:layout_width="350dp"

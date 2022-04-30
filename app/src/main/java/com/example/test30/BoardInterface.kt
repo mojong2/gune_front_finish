@@ -31,4 +31,55 @@ interface BoardInterface {
         @Field("DAY") DAY: String
     ): Call<String>
 
+    @FormUrlEncoded
+    @POST("SelectBoard.php")
+    fun selectBoard(
+        @Field("boardNo") boardNo: Int
+    ): Call<String>
+
+    @FormUrlEncoded
+    @POST("SelectReplyBoardNo.php")
+    fun selectReplyNo(
+        @Field("boardNo") boardNo: Int
+    ): Call<String>
+
+    @FormUrlEncoded
+    @POST("DeleteBoard.php")
+    fun deleteBoard(
+        @Field("boardNo") boardNo: Int
+    ): Call<String>
+
+    @FormUrlEncoded
+    @POST("UpdateBoard.php")
+    fun updateBoard(
+        @Field("boardNo") boardNo: Int,
+        @Field("boardTitle") boardTitle: String,
+        @Field("boardContent") boardContent: String,
+        @Field("boardType") boardType: String,
+        @Field("boardArtu") boardCrtu: String,
+        @Field("boardArtd") boardCrtd: String
+    ): Call<String>
+
+    @FormUrlEncoded
+    @POST("SelectBoardReplyList.php")
+    fun selectBoardReplyList(
+        @Field("boardNo") boardNo: Int
+    ): Call<String>
+
+    @FormUrlEncoded
+    @POST("InsertReplyBoard.php")
+    fun insertReplyBoard(
+        @Field("replyBoardNo") replyBoardNo: Int,
+        @Field("replyContent") replyContent: String,
+        @Field("replyUserId") replyUserId: String,
+        @Field("replyCrtd") replyCrtd: String,
+        @Field("replyCrtu") replyCrtu: String
+    ): Call<String>
+
+    @FormUrlEncoded
+    @POST("DeleteReplyBoard.php")
+    fun deleteReplyBoard(
+        @Field("replyNo") replyNo: Int
+    ): Call<String>
+
 }

@@ -16,7 +16,7 @@
         <activity android:name="SubActivity"/>
         <activity android:name="AnounceActivity"/>
         <activity android:name="MainActivity"/>
-        <activity android:name="GuneActivity"/>
+        <activity android:name="GuneInsertActivity"/>
         <activity android:name="SettingActivity"/>
         <activity android:name="CreateIdActivity"/>
         <activity android:name="GongjiSubActivity"/>
@@ -29,6 +29,10 @@
         <activity android:name="GongjiInsertActivity"/>
         <activity android:name="GongjiUpdateActivity"/>
         <activity android:name="GongjiOpinionActivity"/>
+        <activity android:name="SubActivity2"/>
+        <activity android:name="GuneSubActivity"/>
+        <activity android:name="GuneOpinionActivity"/>
+
 
         <activity
             android:name=".StartActivity"

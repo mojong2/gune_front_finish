@@ -10,16 +10,13 @@ import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import kotlinx.android.synthetic.main.gongji_sub_main.*
+import kotlinx.android.synthetic.main.gune_write_main.*
 import kotlinx.android.synthetic.main.gune_main.*
-import kotlinx.android.synthetic.main.gune_main.size_small_button
-import kotlinx.android.synthetic.main.gune_main.size_text
-import kotlinx.android.synthetic.main.gune_main.size_up_button
-import kotlinx.android.synthetic.main.setting_main.*
-import kotlinx.android.synthetic.main.setting_main.back_button
+import kotlinx.android.synthetic.main.gune_write_main.*
+import kotlinx.android.synthetic.main.gune_write_main.back_button
 import java.util.*
 
-class GuneActivity : AppCompatActivity() {
+class GuneInsertActivity : AppCompatActivity() {
     private var tts: TextToSpeech? = null
     private fun initTextToSpeech(){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
@@ -45,7 +42,7 @@ class GuneActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.gune_main)
+        setContentView(R.layout.gune_write_main)
 
         tts = TextToSpeech(this) { status ->
             if (status != ERROR) {
@@ -54,20 +51,11 @@ class GuneActivity : AppCompatActivity() {
             }
         }
         back_button.setOnClickListener({
-            if(MySharedPreferences.getUserType(this).equals("0")) {
-                val intent = Intent(this, MainActivity2::class.java)
-                startActivity(intent)
-                ActivityCompat.finishAffinity(this)
-                overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
-                finish()
-            }
-            else if(MySharedPreferences.getUserType(this).equals("1")) {
-                val intent = Intent(this, MainActivity3::class.java)
-                startActivity(intent)
-                ActivityCompat.finishAffinity(this)
-                overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
-                finish()
-            }
+            val intent = Intent(this, SubActivity2::class.java)
+            startActivity(intent)
+            ActivityCompat.finishAffinity(this)
+            overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
+            finish()
         })
         size_up_button.setOnClickListener({
             if(size_text.text == "작게"){
@@ -93,25 +81,16 @@ class GuneActivity : AppCompatActivity() {
                 contents_text.setTextSize(TypedValue.COMPLEX_UNIT_DIP,40.0f)
             }
         })
-        regis_button.setOnClickListener({
+        Sound_button.setOnClickListener({
             ttsSpeak(contents_text.getText().toString())
         })
     }
     override fun onBackPressed() {
-        if(MySharedPreferences.getUserType(this).equals("0")) {
-            val intent = Intent(this, MainActivity2::class.java)
-            startActivity(intent)
-            ActivityCompat.finishAffinity(this)
-            overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
-            finish()
-        }
-        else if(MySharedPreferences.getUserType(this).equals("1")) {
-            val intent = Intent(this, MainActivity3::class.java)
-            startActivity(intent)
-            ActivityCompat.finishAffinity(this)
-            overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
-            finish()
-        }
+        val intent = Intent(this, SubActivity2::class.java)
+        startActivity(intent)
+        ActivityCompat.finishAffinity(this)
+        overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
+        finish()
     }
 
 }
