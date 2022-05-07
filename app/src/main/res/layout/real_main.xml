@@ -35,6 +35,7 @@
                 android:backgroundTint="@null"
                 android:textSize="40dp" />
 
+
             <RelativeLayout
                 android:layout_width="206dp"
                 android:layout_height="match_parent"
@@ -112,14 +113,13 @@
             android:layout_height="378dp"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/singo_button"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_below="@id/tmp_2"
             android:layout_centerInParent="true"
             android:background="@drawable/oneonenine"
-            android:text="긴급호출"
             android:textSize="25dp" />
 
         <View
@@ -131,6 +131,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tmp_3"
-            android:background="@drawable/coding_main_menu_btm" />
+            android:background="@drawable/main_menu_btm" />
     </RelativeLayout>
 </LinearLayout>

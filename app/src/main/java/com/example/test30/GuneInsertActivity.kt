@@ -10,6 +10,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import kotlinx.android.synthetic.main.gune_write_main.*
 import kotlinx.android.synthetic.main.gune_main.*
 import kotlinx.android.synthetic.main.gune_write_main.*
@@ -18,6 +19,9 @@ import java.util.*
 
 class GuneInsertActivity : AppCompatActivity() {
     private var tts: TextToSpeech? = null
+    private val requiredPermissions = arrayOf(
+        android.Manifest.permission.RECORD_AUDIO
+    )
     private fun initTextToSpeech(){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
             Toast.makeText(this,"SDK version is low",Toast.LENGTH_SHORT).show()
@@ -43,6 +47,8 @@ class GuneInsertActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.gune_write_main)
+
+
 
         tts = TextToSpeech(this) { status ->
             if (status != ERROR) {

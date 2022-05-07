@@ -8,6 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.real_main.*
+import kotlinx.android.synthetic.main.real_main.ge_button
+import kotlinx.android.synthetic.main.real_main.gong_button
+import kotlinx.android.synthetic.main.real_main.gun_button
+import kotlinx.android.synthetic.main.real_main.lt_button
+import kotlinx.android.synthetic.main.real_main.setting_button
+import kotlinx.android.synthetic.main.real_main.singo_button
+import kotlinx.android.synthetic.main.real_main_admin.*
 
 class MainActivity3 : AppCompatActivity() {
     var mBackWait : Long = 0
@@ -29,7 +36,17 @@ class MainActivity3 : AppCompatActivity() {
             gong_button.visibility = View.VISIBLE
         })
         lt_button.setOnClickListener({
+            lt_button.visibility = View.GONE
+            announce_speak_button.visibility = View.VISIBLE
+            announce_write_button.visibility = View.VISIBLE
+        })
+        announce_write_button.setOnClickListener({
             val intent = Intent(this, GongjiInsertActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_right_exit)
+        })
+        announce_speak_button.setOnClickListener({
+            val intent = Intent(this, AnnounceSpeakActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_right_exit)
         })

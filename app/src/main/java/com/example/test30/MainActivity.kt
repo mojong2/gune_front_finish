@@ -8,6 +8,9 @@ import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.android.synthetic.main.announce_insert_main.*
 import kotlinx.android.synthetic.main.find_pw_main.*
 import kotlinx.android.synthetic.main.login_main.*
 import kotlinx.android.synthetic.main.login_main.back_button
@@ -30,6 +33,16 @@ class MainActivity : AppCompatActivity() {
         lateinit var instance: MainActivity
         fun MainActivityContext(): Context {
             return instance.applicationContext
+        }
+    }
+    private fun initFirebase(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+//                firebaseToken.text = task.result
+                Log.d("gi",firebaseToken.text.toString())
+                val database = FirebaseDatabase.getInstance()
+                database.getReference("users").child(userId).child("token").setValue(firebaseToken)
+            }
         }
     }
     var userId = ""
@@ -61,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 userId = text1.getText().toString()
                 userPw = text2.getText().toString()
                 loginCheck(userId, userPw)
+                initFirebase()
             }
 
 //            val intent = Intent(this, MainActivity2::class.java)

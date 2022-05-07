@@ -55,7 +55,7 @@
         android:layout_height="20dp" />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent"
         >
 
         <ListView
@@ -91,13 +91,15 @@
                 android:textStyle="bold" />
 
         </RelativeLayout>
-    </RelativeLayout>
 
-    <Button
-        android:id="@+id/input_gune"
-        android:layout_width="145dp"
-        android:layout_height="75dp"
-        android:layout_gravity="center"
-        android:textSize="21dp"
-        android:text="건의사항\n올리기" />
+        <Button
+            android:id="@+id/input_gune"
+            android:layout_width="145dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_below="@id/listView"
+            android:layout_centerInParent="true"
+            android:text="건의사항\n올리기"
+            android:textSize="21dp" />
+    </RelativeLayout>
 </LinearLayout>

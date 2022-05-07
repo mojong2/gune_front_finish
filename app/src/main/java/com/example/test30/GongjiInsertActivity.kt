@@ -11,6 +11,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.test30.MyFirebaseMessagingService.Companion.token
 import kotlinx.android.synthetic.main.gongji_insert_main.*
 import kotlinx.android.synthetic.main.gongji_insert_main.back_button
 import org.json.JSONObject
