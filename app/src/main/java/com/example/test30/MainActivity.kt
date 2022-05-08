@@ -35,16 +35,7 @@ class MainActivity : AppCompatActivity() {
             return instance.applicationContext
         }
     }
-    private fun initFirebase(){
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-//                firebaseToken.text = task.result
-                Log.d("gi",firebaseToken.text.toString())
-                val database = FirebaseDatabase.getInstance()
-                database.getReference("users").child(userId).child("token").setValue(firebaseToken)
-            }
-        }
-    }
+
     var userId = ""
     var userPw = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                 userId = text1.getText().toString()
                 userPw = text2.getText().toString()
                 loginCheck(userId, userPw)
-                initFirebase()
             }
 
 //            val intent = Intent(this, MainActivity2::class.java)

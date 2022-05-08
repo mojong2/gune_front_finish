@@ -74,19 +74,7 @@
             android:drawableBottom="@drawable/coding_mbutton" />
 
         <View
-            android:layout_width="74dp"
-            android:layout_height="match_parent" />
-        <TextView
-            android:id="@+id/update_text"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:text="수정"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="30dp" />
-
-        <View
-            android:layout_width="54dp"
+            android:layout_width="180dp"
             android:layout_height="match_parent" />
         <TextView
             android:id="@+id/delete_text"
@@ -127,11 +115,11 @@
         android:textStyle="bold" />
 
     <TextView
-        android:text="댓글"
         android:id="@+id/show_opinion"
         android:layout_width="112dp"
         android:layout_height="37dp"
         android:layout_below="@id/contents1_text"
+        android:text="댓글"
         android:textColor="@color/black"
         android:textSize="30dp" />
 </RelativeLayout>

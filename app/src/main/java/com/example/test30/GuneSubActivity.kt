@@ -39,7 +39,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class GuneSubActivity : AppCompatActivity() {
-
+    var boardNo = 0
+    var boardTitle = ""
+    var boardContent = ""
+    var boardCrtd = ""
+    var userId = ""
     private var tts: TextToSpeech? = null
     val CONTEXT : Context = this
     private fun initTextToSpeech(){
@@ -83,17 +87,28 @@ class GuneSubActivity : AppCompatActivity() {
         val secondintent =intent
         val dataFormat1 = SimpleDateFormat("yyyy.MM.dd")
 
+        //SharedPreferences에 값이 저장되어있지 않을 때
+        if(MySharedPreferences.getUserId(this).isNullOrBlank() || MySharedPreferences.getUserPw(this).isNullOrBlank() || MySharedPreferences.getUserType(this).isNullOrBlank()) {
+
+        }
+        else {  //SharedPreferences에 값이 저장되어 있을 때
+            userId = MySharedPreferences.getUserId(this)
+        }
+        if(intent.hasExtra("NO")) {
+            boardNo = intent.getIntExtra("NO", 0)
+        }
+        selectGuneNo(boardNo)
+        selectGuneReplyNo(boardNo)
 
         if(MySharedPreferences.getUserType(this).equals("0")) {
-            update_text.visibility = View.INVISIBLE
             delete_text.visibility = View.INVISIBLE
         }
         else if(MySharedPreferences.getUserType(this).equals("1")) {
-            update_text.visibility = View.VISIBLE
             delete_text.visibility = View.VISIBLE
         }
         show_opinion.setOnClickListener({
             val intent = Intent(this, GuneOpinionActivity::class.java)
+            intent.putExtra("NO", boardNo)
             startActivity(intent)
             ActivityCompat.finishAffinity(this)
             overridePendingTransition(R.anim.slide_right_enter,R.anim.slide_right_exit)
@@ -132,7 +147,7 @@ class GuneSubActivity : AppCompatActivity() {
             ttsSpeak(contents1_text.getText().toString())
         })
         delete_text.setOnClickListener({
-            val intent = Intent(this, SubActivity::class.java)
+            val intent = Intent(this, SubActivity2::class.java)
             var dialog = AlertDialog.Builder(this)
             var dialog1 = AlertDialog.Builder(this)
             dialog.setTitle("게시글 삭제")
@@ -141,6 +156,8 @@ class GuneSubActivity : AppCompatActivity() {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     when(which){
                         DialogInterface.BUTTON_POSITIVE -> {
+
+                            deleteGuneNo(boardNo)
 
                             dialog1.setTitle("게시글 삭제 완료")
                             dialog1.setMessage("게시글을 삭제했습니다!")
@@ -167,7 +184,7 @@ class GuneSubActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, SubActivity::class.java)
+        val intent = Intent(this, SubActivity2::class.java)
         startActivity(intent)
         ActivityCompat.finishAffinity(this)
         overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
@@ -175,6 +192,121 @@ class GuneSubActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+    }
+
+    private fun selectGuneNo(NO: Int) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.selectGuneNo(NO)
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    val info = JSONObject(result)
+                    val status = info.getString("status")
+
+                    if(status.equals("true")) {
+                        val TITLE = info.getString("TITLE")
+                        val CONTENT = info.getString("CONTENT")
+                        val CRTD = info.getString("CRTD")
+                        val ID = info.getString("ID")
+
+                        boardTitle = TITLE
+                        boardContent = CONTENT
+                        boardCrtd = CRTD
+
+                        title1_text.text = TITLE
+                        contents1_text.text = CONTENT
+
+                        if(ID.equals(userId)) {
+                            delete_text.visibility = View.VISIBLE
+                        }
+                    }
+                    else if(status.equals("false")) {
+
+                    }
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
+    }
+
+    private fun selectGuneReplyNo(NO: Int) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.selectGuneReplyNo(NO)
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    val info = JSONObject(result)
+                    val status = info.getString("status")
+
+                    if(status.equals("true")) {
+                        val NUM = info.getString("NUM")
+
+                        show_opinion.text = "댓글(" + NUM + ")"
+                    }
+                    else if(status.equals("false")) {
+
+                    }
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
+    }
+
+    private fun deleteGuneNo(NO: Int) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.deleteGune(NO)
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+                }
+
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
     }
 
 }

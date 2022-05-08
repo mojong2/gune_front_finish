@@ -30,15 +30,6 @@
             android:textColor="@color/black"
             android:textSize="30dp"
             android:textStyle="bold" />
-        <TextView
-            android:id="@+id/select_date"
-            android:layout_width="105dp"
-            android:layout_height="match_parent"
-            android:text="날짜 선택"
-            android:gravity="center"
-            android:textSize="25dp"
-            android:textColor="@color/black"
-            />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -63,34 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="480dp"
             android:descendantFocusability="blocksDescendants" />
-
-        <RelativeLayout
-            android:id="@+id/CVOn"
-            android:layout_width="400dp"
-            android:layout_height="500dp"
-            android:layout_centerInParent="true"
-            android:visibility="invisible">
-
-            <CalendarView
-                android:id="@+id/CalendarView"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:background="#DD000000" />
-
-            <Button
-                android:id="@+id/choose_date"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:layout_below="@id/CalendarView"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/line4"
-                android:text="날짜\n선택"
-                android:textColor="@color/black"
-                android:textSize="22dp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
 
         <Button
             android:id="@+id/input_gune"

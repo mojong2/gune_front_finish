@@ -38,13 +38,15 @@ import java.time.format.DateTimeFormatter
 
 class SubActivity2 : AppCompatActivity() {
 
+    val current : Long = System.currentTimeMillis()
+    val format1 = SimpleDateFormat("yyyy-MM-dd")
+    var TODAY = format1.format(current)
+    var userId = ""
     val items = mutableListOf<ListViewItem3>()
     val adapter = ListViewAdapter3(items)
-
     init {
         instance = this
     }
-
     companion object {
         lateinit var instance: SubActivity2
         fun SubActivity2Context(): Context {
@@ -65,12 +67,21 @@ class SubActivity2 : AppCompatActivity() {
         val cal = Calendar.getInstance()
         cal.time = Date()
 
-        listView.adapter = adapter
-        items.add(ListViewItem3("어쩔방구","2022년일까?",1))
+        if(MySharedPreferences.getUserType(this).equals("1")) { //이장님일때
+            input_gune.visibility = View.GONE
+            guneAdminList()
+        }
+        else if(MySharedPreferences.getUserType(this).equals("0")) {    //사용자일때
+            userId = MySharedPreferences.getUserId(this)
+            guneUserList(userId)
+        }
 
+        listView.adapter = adapter
         listView.setOnItemClickListener { parent: AdapterView<*>, view: View, position: Int, id: Long ->
             val item = parent.getItemAtPosition(position) as ListViewItem3
             val intent = Intent(this, GuneSubActivity::class.java)
+
+            intent.putExtra("NO", adapter.getItem(position).no)
 
             startActivity(intent)
             ActivityCompat.finishAffinity(this)
@@ -91,34 +102,6 @@ class SubActivity2 : AppCompatActivity() {
                 overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
                 finish()
             }
-        })
-        select_date.setOnClickListener({
-            select_date.isClickable = false
-            CVOn.visibility = View.VISIBLE
-            input_gune.visibility = View.INVISIBLE
-            listView.visibility = View.INVISIBLE
-            CVOn.startAnimation(anim_test)
-            var selected_date = ""
-            CalendarView.setOnDateChangeListener { view, year, month, date ->
-                if ((month + 1 < 10) && (date < 10)) {
-                    selected_date = String.format("%d-0%d-0%d", year, month + 1, date)
-                } else if ((month + 1 < 10) && (date >= 10)) {
-                    selected_date = String.format("%d-0%d-%d", year, month + 1, date)
-                } else if ((month + 1 >= 10) && (date < 10)) {
-                    selected_date = String.format("%d-%d-0%d", year, month + 1, date)
-                } else {
-                    selected_date = String.format("%d-%d-%d", year, month + 1, date)
-                }
-
-            }
-            choose_date.setOnClickListener({
-                select_date.isClickable = true
-                CVOn.visibility = View.INVISIBLE
-                input_gune.visibility = View.VISIBLE
-                listView.visibility = View.VISIBLE
-
-            })
-
         })
         input_gune.setOnClickListener({
             val intent = Intent(this, GuneInsertActivity::class.java)
@@ -144,9 +127,104 @@ class SubActivity2 : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun guneUserList(ID: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.selectGuneUserList(ID)
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    val info = JSONObject(result)
+                    val array = info.optJSONArray("result")
+                    var i = 0
+                    while(i < array.length()) {
+                        val jsonObject = array.getJSONObject(i)
+                        val NO = jsonObject.getInt("NO")
+                        val TITLE = jsonObject.getString("TITLE")
+                        val NAME = jsonObject.getString("NAME")
+                        val TYPE = jsonObject.getString("TYPE")
+
+                        if(TYPE.equals("1")) {
+                            items.add(ListViewItem3(ContextCompat.getDrawable(SubActivity2.SubActivity2Context(), R.drawable.yellow_star)!!, TITLE, NAME, NO))
+                        }
+                        else if(TYPE.equals("0")) {
+                            items.add(ListViewItem3(ContextCompat.getDrawable(SubActivity2.SubActivity2Context(), R.drawable.empty_star)!!, TITLE, NAME, NO))
+                        }
+
+                        i++
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
+    }
+
+    private fun guneAdminList() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.selectGuneAdminList()
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    val info = JSONObject(result)
+                    val array = info.optJSONArray("result")
+                    var i = 0
+                    while(i < array.length()) {
+                        val jsonObject = array.getJSONObject(i)
+                        val NO = jsonObject.getInt("NO")
+                        val TITLE = jsonObject.getString("TITLE")
+                        val NAME = jsonObject.getString("NAME")
+                        val TYPE = jsonObject.getString("TYPE")
+
+                        if(TYPE.equals("1")) {
+                            items.add(ListViewItem3(ContextCompat.getDrawable(SubActivity2.SubActivity2Context(), R.drawable.yellow_star)!!, TITLE, NAME, NO))
+                        }
+                        else if(TYPE.equals("0")) {
+                            items.add(ListViewItem3(ContextCompat.getDrawable(SubActivity2.SubActivity2Context(), R.drawable.empty_star)!!, TITLE, NAME, NO))
+                        }
+
+                        i++
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
+    }
+
 }
 
-data class ListViewItem3(val title: String,val date: String, val no: Int)
+data class ListViewItem3(val icon: Drawable, val title: String, val date: String, val no: Int)
 
 class ListViewAdapter3(private val items: MutableList<ListViewItem3>): BaseAdapter() {
     override fun getCount(): Int = items.size
@@ -157,6 +235,7 @@ class ListViewAdapter3(private val items: MutableList<ListViewItem3>): BaseAdapt
         if (convertView == null)
             convertView = LayoutInflater.from(parent?.context).inflate(R.layout.custom_list_item, parent, false)
         val item: ListViewItem3 = items[position]
+        convertView!!.image_title.setImageDrawable(item.icon)
         convertView!!.text_title.text = item.title
         convertView.text_date.text = item.date
         return convertView

@@ -44,6 +44,17 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class GuneOpinionActivity : AppCompatActivity() {
+    val current : Long = System.currentTimeMillis()
+    val format2 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    var TODAY = format2.format(current)
+    var boardNo = 0
+    var replyNo = 0
+    var replyContent = ""
+    var replyStatus = ""
+    var userId = ""
+    var userType = ""
+    var replyCrtd = ""
+    var replyCrtu = ""
     val items = mutableListOf<ListViewItem2>()
     val adapter = ListViewAdapter2(items)
     private fun deleteOpinion(NO: Int){
@@ -55,7 +66,7 @@ class GuneOpinionActivity : AppCompatActivity() {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 when(which){
                     DialogInterface.BUTTON_POSITIVE -> { // 삭제 버튼이 눌렸음
-
+                        deleteReplyGune(NO, boardNo)
                         dialog1.setTitle("댓글 삭제 완료")
                         dialog1.setMessage("댓글을 삭제했습니다!")
                         var dialog_listener = object: DialogInterface.OnClickListener{
@@ -92,6 +103,12 @@ class GuneOpinionActivity : AppCompatActivity() {
             convertView.user_text.text = item.text
             convertView.user_date.text = item.date
             convertView.delete_button.isVisible = true
+            if(userType.equals("0") && !(adapter.getItem(position).id.equals(userId))) {
+                convertView.delete_button.isVisible = false
+            }
+            convertView.delete_button.setOnClickListener({
+                deleteOpinion(adapter.getItem(position).no)
+            })
             return convertView
         }
     }
@@ -130,6 +147,20 @@ class GuneOpinionActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.gune_opinion_main)
 
+        //SharedPreferences에 값이 저장되어있지 않을 때
+        if(MySharedPreferences.getUserId(this).isNullOrBlank() || MySharedPreferences.getUserPw(this).isNullOrBlank() || MySharedPreferences.getUserType(this).isNullOrBlank()) {
+
+        }
+        else {  //SharedPreferences에 값이 저장되어 있을 때
+            userId = MySharedPreferences.getUserId(this)
+            userType = MySharedPreferences.getUserType(this)
+        }
+        if(intent.hasExtra("NO")){
+            boardNo = intent.getIntExtra("NO", 0)
+        }
+
+        selectGuneReplyList(boardNo)
+
         listView.adapter = adapter
         tts = TextToSpeech(this) { status ->
             if (status != TextToSpeech.ERROR) {
@@ -147,12 +178,15 @@ class GuneOpinionActivity : AppCompatActivity() {
             }
             else {
                 replyContentInput = opinion_text.text.toString()
+                insertReplyGune(boardNo, replyContentInput)
                 Toast.makeText(this, "댓글을 등록했습니다.", Toast.LENGTH_SHORT).show()
                 opinion_text.setText("")
+                adapter.notifyDataSetChanged()
             }
         })
         back_button.setOnClickListener({
             val intent = Intent(this, GuneSubActivity::class.java)
+            intent.putExtra("NO", boardNo)
             startActivity(intent)
             ActivityCompat.finishAffinity(this)
             overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
@@ -162,28 +196,135 @@ class GuneOpinionActivity : AppCompatActivity() {
             ttsSpeak(adapter.getItem(position).text)
         }
         good_text.setOnClickListener({
-
+            insertReplyGune(boardNo, "좋아요")
             Toast.makeText(this, "댓글을 등록했습니다.", Toast.LENGTH_SHORT).show()
         })
         okay_text.setOnClickListener({
-
+            insertReplyGune(boardNo, "알겠어요")
             Toast.makeText(this, "댓글을 등록했습니다.", Toast.LENGTH_SHORT).show()
         })
         question_text.setOnClickListener({
-
+            insertReplyGune(boardNo, "궁금해요")
             Toast.makeText(this, "댓글을 등록했습니다.", Toast.LENGTH_SHORT).show()
         })
         cool_text.setOnClickListener({
-
+            insertReplyGune(boardNo, "멋져요")
             Toast.makeText(this, "댓글을 등록했습니다.", Toast.LENGTH_SHORT).show()
         })
     }
 
     override fun onBackPressed() {
         val intent = Intent(this, GuneSubActivity::class.java)
+        intent.putExtra("NO", boardNo)
         startActivity(intent)
         ActivityCompat.finishAffinity(this)
         overridePendingTransition(R.anim.slide_left_enter,R.anim.slide_left_exit)
+    }
+
+    private fun selectGuneReplyList(NO: Int) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.selectGuneReplyList(NO)
+        call.enqueue(object: Callback<String> {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    val info = JSONObject(result)
+                    val array = info.optJSONArray("result")
+                    var i = 0
+                    while(i < array.length()) {
+                        val jsonObject = array.getJSONObject(i)
+                        val NO = jsonObject.getInt("NO")
+                        val NAME = jsonObject.getString("NAME")
+                        val CONTENT = jsonObject.getString("CONTENT")
+                        val CRTD = jsonObject.getString("CRTD")
+                        val ID = jsonObject.getString("ID")
+                        val WDAY1 = LocalDateTime.parse(CRTD, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                        val WDAY2 = WDAY1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+                        items.add(ListViewItem2(NAME, CONTENT, WDAY2, NO, ID))
+
+                        i++
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
+    }
+
+    private fun insertReplyGune(NO: Int, CONTENT: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.insertReplyGune(NO, CONTENT, userId, TODAY, userId)
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    items.clear()
+                    selectGuneReplyList(NO)
+                    adapter.notifyDataSetChanged()
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
+    }
+
+    private fun deleteReplyGune(NO: Int, BOARDNO: Int) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://sejongcountry.dothome.co.kr/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val service = retrofit.create(GuneInterface::class.java)
+        val call: Call<String> = service.deleteReplyGune(NO)
+        call.enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful && response.body() != null) {
+                    var result = response.body().toString()
+                    Log.d("Reg", "onResponse Success : " + response.toString())
+                    Log.d("Reg", "onResponse Success : " + result)
+
+                    items.clear()
+                    selectGuneReplyList(BOARDNO)
+                    adapter.notifyDataSetChanged()
+                }
+                else {
+                    Log.d("Reg", "onResponse Failed")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("Reg", "error : " + t.message.toString())
+            }
+        })
     }
 }
 data class ListViewItem2(val name: String, val text: String, val date: String, val no: Int, val id: String)
